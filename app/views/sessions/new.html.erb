@@ -1,0 +1,24 @@
+<% title 'Sign In' %>
+<div class="jumbotron">
+	<h2>Sign In</h2>
+	<%= form_tag sessions_path, class: 'well form-horizontal' do %>
+		<div class="form-group">
+			<%= label_tag :email, "Email:", for: 'inputEmail', class: 'col-sm-1 control-label'%>
+			<div class="col-sm-3">
+				<%= text_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email', id: 'inputEmail'%>
+			</div>
+		</div>
+		<div class="form-group">
+			<%= label_tag :password, "Password:", class: 'col-sm-1 control-label' %>
+			<div class="col-sm-3">
+				<%= password_field_tag :password, params[:password], class: 'form-control', placeholder: 'Password' %>
+				<!--<p class="help-block">Forgot password?</p>-->
+			</div>
+		</div>
+		<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-3">
+					<%= submit_tag "Sign In",  class: 'btn btn-primary'%>
+				</div>
+		</div>
+	<% end %>
+</div>

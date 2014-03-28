@@ -1,0 +1,108 @@
+<dev class="jumbotron">
+<p>
+  <%= link_to 'Create Event', new_event_path, :id => 'new_event' %>
+</p>
+<script>
+  
+  
+  $(document).ready(function(){
+      // page is now ready, initialize the calendar...
+      $('#new_event').click(function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.ajax({
+          url: url,
+          beforeSend: function() {
+            $('#loading').show();
+          },
+          complete: function() {
+            $('#loading').hide();
+          },
+          success: function(data) {
+            $('#create_event').replaceWith(data['form']);
+            $('#create_event_dialog').dialog({
+              title: 'New Event',
+              modal: true,
+              width: 500,
+              close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
+            });
+          }
+        });
+      });
+
+      $('#calendar').fullCalendar({
+          editable: true,
+          header: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'month,agendaWeek,agendaDay'
+          },
+          defaultView: 'agendaWeek',
+          height: 500,
+          slotMinutes: 15,
+          loading: function(bool){
+              if (bool) 
+                  $('#loading').show();
+              else 
+                  $('#loading').hide();
+          },
+          events: "/events/get_events",
+          timeFormat: 'h:mm t{ - h:mm t} ',
+          dragOpacity: "0.5",
+          eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+//              if (confirm("Are you sure about this change?")) {
+                  moveEvent(event, dayDelta, minuteDelta, allDay);
+//              }
+//              else {
+//                  revertFunc();
+//              }
+          },
+          
+          eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+//              if (confirm("Are you sure about this change?")) {
+                  resizeEvent(event, dayDelta, minuteDelta);
+//              }
+//              else {
+//                  revertFunc();
+//              }
+          },
+          
+          eventClick: function(event, jsEvent, view){
+              showEventDetails(event);
+          },
+      
+      
+      
+      
+      });
+  });
+</script>
+<div>
+  <div id='calendar'></div>
+</div>
+<div id = "desc_dialog" class="dialog" style ="display:none;">
+  <div id = "event_desc"></div>
+  <br/>
+  <br/>
+  <div id = "event_actions">
+    <span id = "edit_event"></span>
+    <span id = "delete_event"></span>
+  </div>
+</div>
+<div id = "create_event_dialog" class="dialog" style ="display:none;">
+  <div id = "create_event"></div>
+</div>
+</div>
+<script type="text/javascript">
+      authenticity_token = "<%= form_authenticity_token %>"
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-1010763-3");
+        pageTracker._trackPageview();
+        } catch(err) {}</script>
+<!--
+<h1>Events#index</h1>
+<p>Find me in app/views/events/index.html.erb</p>-->

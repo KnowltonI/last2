@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Last</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="subpage">
+	<header>
+      <%= render 'layouts/navigation' %>
+    </header>
+	<main role="main">
+    <div class="wrapper">
+       <%= render 'layouts/messages' %>
+        <span>
+          <div id = 'loading'>
+            Loading...
+          </div>
+        </span>
+        <div class="aplicationContent">
+          <div class="appRightContent">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </main>
+</body>
+</html>

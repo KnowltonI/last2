@@ -1,0 +1,9 @@
+<%= div_for user do %>
+	<h2> <%# link_to_unless_current user.name, event_path(user) %></h2>
+	<p><strong>Username:</strong> <%= user.name %></p>
+	<p><strong>Email:</strong> <%= user.email %></p>
+	<p>
+			<%= link_to 'Edit', edit_user_path(user) %> |
+			<%= link_to 'Delete', user_path(user), method: :delete, data: {confirm: 'Really are you sua?' } %>
+	</p>
+<% end %>
